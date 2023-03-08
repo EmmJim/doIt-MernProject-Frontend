@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: rgb(67 56 202);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.titulo {
+    font-family: 'Shantell Sans', cursive;
+}
