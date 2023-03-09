@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const Login = () => {
 
@@ -10,15 +11,14 @@ const Login = () => {
         password: ''
     })
 
-    const [token, setToken] = useState(localStorage.getItem('token') || '');
 
     const {email, password} = user;
 
+    const {auth, setAuth} = useAuth();
+
     useEffect(() => {
-        if(token) {
-            navigate('/dashboard')
-        }
-    }, [token])
+        if(auth.user?._id) navigate('/dashboard')
+    }, [auth])
 
     const handleOnChange = (e) => {
         setUser((prevState) => ({
@@ -35,8 +35,6 @@ const Login = () => {
         }
 
 
-        console.log(JSON.stringify(user))
-
         const result = await fetch('http://localhost:4000/api/auth/login', {
             method: 'POST',
             headers: {
@@ -49,10 +47,11 @@ const Login = () => {
 
         if(data.token){
             localStorage.setItem('token', data.token);
-            setToken(data.token)
+            await setAuth(data)
         }
 
     }
+
 
     return (
         <div className='h-screen flex flex-col justify-center items-center'>
@@ -69,7 +68,7 @@ const Login = () => {
                     </div>
                     <div className='flex flex-col space-y-3'>
                         <label className='font-bold'>Password:</label>
-                        <input className='border border-indigo-400 rounded-lg p-1' type="text" placeholder='Your password here' name="password" value={password} onChange={handleOnChange}/>
+                        <input className='border border-indigo-400 rounded-lg p-1' type="password" placeholder='Your password here' name="password" value={password} onChange={handleOnChange}/>
                     </div>
                     <div className='flex justify-center'>
                         <input className='bg-indigo-700 text-white rounded-lg p-2 font-bold hover:bg-indigo-900 hover:scale-125 ease-out duration-300 hover:cursor-pointer' type="submit" value="Log In" />
