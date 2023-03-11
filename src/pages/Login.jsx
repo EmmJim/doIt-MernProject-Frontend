@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 const Login = () => {
@@ -75,7 +75,7 @@ const Login = () => {
                     </div>
                 </form>
                 <div className='flex justify-end'>
-                    <p>Don't have an account yet? <span className='font-bold text-indigo-700 hover:cursor-pointer'>Sign Up Here!</span></p>
+                    <Link to={'/register'}>Don't have an account yet? <span className='font-bold text-indigo-700 hover:cursor-pointer'>Sign Up Here!</span></Link>
                 </div>
             </div>
         </div>
