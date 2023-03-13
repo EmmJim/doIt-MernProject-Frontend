@@ -21,7 +21,7 @@ const EditTodo = () => {
 
     useEffect(() => {
         const getTodo = async() => {
-            const result = await fetch(`http://localhost:4000/api/todos/${id}`);
+            const result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos/${id}`);
             const data = await result.json();
         
             setTodo(data.todo);
@@ -53,7 +53,7 @@ const EditTodo = () => {
         }
 
 
-        const result = await fetch(`http://localhost:4000/api/todos/${id}`, {
+        const result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos/${id}`, {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',

@@ -9,6 +9,7 @@ const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState({});
     const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const autenticarUsuario = async () => {
@@ -20,7 +21,7 @@ const AuthProvider = ({children}) => {
             }
 
             try {
-                const response = await fetch(`http://localhost:4000/api/users/profile`, {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/profile`, {
                     headers: {
                         "Content-type": "application/json",
                         'x-token': `${token}`
@@ -29,7 +30,6 @@ const AuthProvider = ({children}) => {
                 const data = await response.json();
 
                 await setAuth(data);
-                navigate('/dashboard')
             } catch (error) {
                 setAuth({})
                 console.log(error)

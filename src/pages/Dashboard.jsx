@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 //Hooks
@@ -16,28 +16,27 @@ const Dashboard = () => {
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [filter, setFilter] = useState(null);
 
+  const {current: todosArray} = useRef(todos);
+
   const getTodos = async() => {
-    const result = await fetch(`http://localhost:4000/api/todos`);
+    const result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos`);
     const data = await result.json();
 
     const todosByUser = data.todos.filter((todo) => todo.userId === auth.user._id);
 
     setTodos(todosByUser);
   }
-
-  useEffect(() => {
-    getTodos();
-  }, [todos])
   
   useEffect(() => {
     if(filter !== null){
+      getTodos();
       const filteredTodos = todos.filter(todo => todo.status === filter);
 
       setFilteredTodos(filteredTodos);
-    }  else {
-      getTodos();
-    }
-  }, [todos, filter]);
+      return;
+    } 
+    getTodos();
+  }, [todosArray.length, filter]);
   
   const handleFilterTodos = (status) => {
     setFilter(status);

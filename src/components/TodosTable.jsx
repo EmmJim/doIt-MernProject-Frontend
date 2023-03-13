@@ -11,7 +11,7 @@ const TodosTable = ({todos}) => {
 
     const handleToggleStatus = async (id, status) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/todos/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos/${id}`, {
                 method: 'PUT',
                 headers: {
                     Accept: 'application/json',
@@ -21,7 +21,6 @@ const TodosTable = ({todos}) => {
                 body: JSON.stringify({status: !status})
             })
             const data = await response.json();
-            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -39,7 +38,7 @@ const TodosTable = ({todos}) => {
         }).then(async(result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await fetch(`http://localhost:4000/api/todos/${id}`, {
+                    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos/${id}`, {
                         method: 'DELETE',
                         headers: {
                             Accept: 'application/json',

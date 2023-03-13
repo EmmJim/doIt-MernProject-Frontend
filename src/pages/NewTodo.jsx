@@ -36,7 +36,7 @@ const NewTodo = () => {
         }
 
 
-        const result = await fetch('http://localhost:4000/api/todos', {
+        const result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/todos`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
